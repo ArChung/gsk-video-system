@@ -2,7 +2,7 @@ const path = require('path')
 
 
 module.exports = {
-    baseUrl: './',
+    baseUrl: '/dist/',
     css: {
         loaderOptions: {
             sass: {
