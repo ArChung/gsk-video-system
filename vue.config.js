@@ -2,7 +2,7 @@ const path = require('path')
 
 
 module.exports = {
-    baseUrl: './',
+    baseUrl: '/gsk-video-system/dist/',
     css: {
         loaderOptions: {
             sass: {
