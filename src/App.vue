@@ -38,11 +38,11 @@ export default {
   html,body
     margin: 0
     padding: 0
-    font-family: "微軟正黑體","Microsoft JhengHei", "STHeiti Light", "STHeiti", Arial, sans-serif
-    
+    font-family: "微軟正黑體","Microsoft JhengHei", "STHeiti Light", "STHeiti", Arial, sans-serif !important
+    background-color: #f1f1f1 !important
   input 
     display: block
     padding: 10px 15px
-    // border: 1px solid #000
+    // border: 1px solid #000 
     margin-bottom: 5px
 </style>

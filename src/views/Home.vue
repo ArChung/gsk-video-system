@@ -34,19 +34,19 @@
       <div class="container">
         <div class="v-title vt1"></div>
         <div class="youtubeWrap">
-          <div class="youTubeBox" @click='vid="qWHLWRIoLFk"'>
+          <div class="youTubeBox" @click='playVideo("qWHLWRIoLFk","polident_instructions_tw")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/qWHLWRIoLFk/0.jpg")'>
               <!-- <youtube video-id="qWHLWRIoLFk" player-width='100%' player-height='100%'></youtube> -->
             </div>
             <div class="txt greenTxt">保麗淨使用方式說明<br>(台語版)</div>
           </div>
-          <div class="youTubeBox" @click='vid="DxRTSpCUqm8"'>
+          <div class="youTubeBox" @click='playVideo("DxRTSpCUqm8","polident_instructions_zh")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/DxRTSpCUqm8/0.jpg")'>
               <!-- <youtube video-id="DxRTSpCUqm8" player-width='100%' player-height='100%'></youtube> -->
             </div>
             <div class="txt greenTxt">保麗淨使用方式說明<br>(國語版)</div>
           </div>
-          <div class="youTubeBox" @click='vid="3nQkijT7bdY"'>
+          <div class="youTubeBox" @click='playVideo("3nQkijT7bdY","polident_experience")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/3nQkijT7bdY/0.jpg")'>
               <!-- <youtube video-id="3nQkijT7bdY" player-width='100%' player-height='100%'></youtube> -->
             </div>
@@ -59,13 +59,13 @@
       <div class="container">
         <div class="v-title vt2"></div>
         <div class="youtubeWrap">
-          <div class="youTubeBox" @click='vid="iDazx8urrok"'>
+          <div class="youTubeBox" @click='playVideo("iDazx8urrok","sensodyne_discovery")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/iDazx8urrok/0.jpg")'>
               <!-- <youtube video-id="iDazx8urrok" player-width='100%' player-height='100%'></youtube> -->
             </div>
             <div class="txt blueTxt">DISCOVERY探索頻道 X 舒酸定</div>
           </div>
-          <div class="youTubeBox" @click='vid="jlUbFix3U6s"'>
+          <div class="youTubeBox" @click='playVideo("jlUbFix3U6s","sensodyne_technology")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/jlUbFix3U6s/0.jpg")'>
               <!-- <youtube video-id="jlUbFix3U6s" player-width='100%' player-height='100%'></youtube> -->
             </div>
@@ -78,10 +78,11 @@
       <div class="container">
         <div class="v-title vt3"></div>
         <div class="youtubeWrap">
-          <div class="youTubeBox" @click='vid="jwYU5QDifHE"'>
+          <div class="youTubeBox" @click='playVideo("jwYU5QDifHE","parodontax")'>
             <div class="youtube" style='background-image: url("https://img.youtube.com/vi/jwYU5QDifHE/0.jpg")'>
               <!-- <youtube video-id="jwYU5QDifHE" player-width='100%' player-height='100%'></youtube> -->
             </div>
+            <div class="txt blueTxt">牙周適修護作用機轉說明</div>
           </div>
           
         </div>
@@ -137,12 +138,12 @@
     <div class="page" v-if='testMode'>
       <div class="container">
         <div class="btnWrap">
-          <div class="btn" @click='addVideoCount("parodontax")'> parodontax</div>
-          <div class="btn" @click='addVideoCount("polident_experience")'> polident_experience</div>
-          <div class="btn" @click='addVideoCount("polident_instructions_tw")'> polident_instructions_tw</div>
-          <div class="btn" @click='addVideoCount("polident_instructions_zh")'> polident_instructions_zh</div>
-          <div class="btn" @click='addVideoCount("sensodyne_discovery")'> sensodyne_discovery</div>
-          <div class="btn" @click='addVideoCount("sensodyne_technology")'> sensodyne_technology</div>
+          <div class="btn" @click='playVideo("parodontax")'> parodontax</div>
+          <div class="btn" @click='playVideo("polident_experience")'> polident_experience</div>
+          <div class="btn" @click='playVideo("polident_instructions_tw")'> polident_instructions_tw</div>
+          <div class="btn" @click='playVideo("polident_instructions_zh")'> polident_instructions_zh</div>
+          <div class="btn" @click='playVideo("sensodyne_discovery")'> sensodyne_discovery</div>
+          <div class="btn" @click='playVideo("sensodyne_technology")'> sensodyne_technology</div>
         </div>
       </div>
     </div>
@@ -177,17 +178,12 @@ export default {
       password: "",
       hospitalData: null,
       totalData: null,
-      userName: null,
-      userPhone: null,
-      userGender: null,
-      userBirth: null,
-      userContactTime: null,
-      userAgree: null,
-      // userName: '游志忠',
-      // userPhone: '0926276430',
-      // userGender: 'female',
-      // userBirth: '77',
-      // userContactTime: '',
+      userName: 'archung',
+      userPhone: '0926276430',
+      userGender: 'male',
+      userBirth: '77',
+      userContactTime: '13-17',
+      userAgree: true,
     };
   },
   computed: {
@@ -200,12 +196,8 @@ export default {
     signDay() {
       return new Date().getDate()
     }
-
-
   },
   created() {
-    console.log("create");
-    console.log("firebase.apps.length: ", firebase.apps.length);
     if (!firebase.apps.length) {
       var config = {
         apiKey: "AIzaSyAfSyBKDOds7c5qRLRHHg2Ug3RHLpNj_HE",
@@ -218,24 +210,25 @@ export default {
       firebase.initializeApp(config);
     }
     this.database = firebase.database();
+    this.storage = firebase.storage();
   },
   methods: {
-
-    addVideoCount(vName) {
+    playVideo(vid, vName) {
+      this.vid = vid;
       if (this.hospitalData) {
         let updates = {}
         updates["/videos/" + vName] = (this.hospitalData.videos[vName]) ? +this.hospitalData.videos[vName] + 1 : 1;
+        updates["videoCount"] = (this.hospitalData.videoCount) ? +this.hospitalData.videoCount + 1 : 1;
         this.dataBaseRef.update(updates);
 
         let updates2 = {}
         updates2["/videos/" + vName] = (this.totalData.videos[vName]) ? +this.totalData.videos[vName] + 1 : 1;
+        updates2["videoCount"] = (this.totalData.videoCount) ? +this.totalData.videoCount + 1 : 1;
         this.totalDataBaseRef.update(updates2);
       } else {
         alert("請先登入")
         return
       }
-
-
     },
     login() {
       this.dataBaseRef = this.database.ref(
@@ -249,8 +242,6 @@ export default {
           alert('查無此帳號')
           return
         }
-
-        // that.hospitalData = data.val();
         if (that.password !== data.val().pw) {
           alert('密碼錯誤')
         } else {
@@ -267,21 +258,79 @@ export default {
         $event.preventDefault();
       }
     },
+    toNumber(str) {
+      return str.replace(/\D/g, "");
+    },
     sendData() {
-      if (this.userName && this.userPhone && this.userGender && this.userBirth && this.userContactTime && this.userAgree) {
-        var _this = this;
-        var png = _this.$refs.signature.save()
-        var jpeg = _this.$refs.signature.save('image/jpeg')
-        var svg = _this.$refs.signature.save('image/svg+xml');
-        alert('送出成功!')
-        this.pageChannel = 8;
-        console.log(png);
-        console.log(jpeg)
-        console.log(svg)
-      } else {
-        alert('請完成表單')
+      if (!this.userName || !this.userPhone || !this.userGender || !this.userBirth || !this.userContactTime || !this.userAgree) {
+        alert('請完成表單');
+        return
       }
 
+      let manId;
+      let that = this;
+      let manCountDataBase = this.database.ref('/gsk-video-system/manList/manCount');
+      let manDataBaseRef = this.database.ref("/gsk-video-system/manList/man/");
+      let manPhoneId = this.toNumber(this.userPhone)
+      let targetManRef = manDataBaseRef.child(manPhoneId);
+
+      targetManRef.once("value")
+        .then(function (snapshot) {
+          console.log(snapshot.exists());
+
+
+          // if (!snapshot.exists()) {
+          if (false) {
+            alert('您已經填過資料囉');
+          } else {
+
+            // 01.上傳照片
+
+            let imageName = manPhoneId + '.png';
+            let png = that.$refs.signature.save();
+
+            that.storage.ref('/videoSystemPhotos/' + imageName)
+              .putString(png, "data_url")
+              .then(function (snapshot) {
+                return snapshot.ref.fullPath
+              }).then((imgPath) => {
+                // 02.上傳資料
+                targetManRef.set({
+                  hospital: that.hospitalData.hospital,
+                  hospitalId: that.toNumber(that.hospitalData.hospitalTel),
+                  date: new Date().toLocaleString(),
+                  userName: that.userName,
+                  userPhone: that.userPhone,
+                  userGender: that.userGender,
+                  userBirth: that.userBirth,
+                  userContactTime: that.userContactTime,
+                  userAgree: that.userAgree,
+                  sign: imgPath
+                });
+
+                // 03. update man count
+                manCountDataBase.once('value').then(function (snapshot) {
+                  manCountDataBase.set(+snapshot.val() + 1);
+                });
+
+                // 03. update hospital manList
+                let manArr = that.hospitalData.manArr;
+                manArr = (manArr) ? manArr : []
+                manArr.push(manPhoneId);
+                
+                let updates = {}
+                updates["manArr"] = manArr;
+                updates["manCount"] = manArr.length;
+                that.dataBaseRef.update(updates);
+              });
+          }
+        });
+
+
+
+    },
+    onlynumber(str) {
+      return str.replace(/\D/g, '');
     },
     connectDataBase() {
       let that = this
