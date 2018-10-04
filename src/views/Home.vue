@@ -178,13 +178,25 @@ export default {
       password: "",
       hospitalData: null,
       totalData: null,
-      userName: 'archung',
-      userPhone: '0926276430',
-      userGender: 'male',
-      userBirth: '77',
-      userContactTime: '13-17',
-      userAgree: true,
+      userName: '',
+      userPhone: '',
+      userGender: '',
+      userBirth: '',
+      userContactTime: '',
+      userAgree: false,
     };
+  },
+  watch: {
+    pageChannel(val) {
+      if (val == 7) {
+        this.userName = '';
+        this.userPhone = '';
+        this.userGender = '';
+        this.userBirth = '';
+        this.userContactTime = '';
+        this.userAgree = false;
+      }
+    }
   },
   computed: {
     signYear() {
@@ -279,11 +291,11 @@ export default {
           console.log(snapshot.exists());
 
 
-          // if (!snapshot.exists()) {
-          if (false) {
+          if (snapshot.exists()) {
+            // if (false) {
             alert('您已經填過資料囉');
           } else {
-
+            that.pageChannel = 8;
             // 01.上傳照片
 
             let imageName = manPhoneId + '.png';
@@ -317,7 +329,7 @@ export default {
                 let manArr = that.hospitalData.manArr;
                 manArr = (manArr) ? manArr : []
                 manArr.push(manPhoneId);
-                
+
                 let updates = {}
                 updates["manArr"] = manArr;
                 updates["manCount"] = manArr.length;
